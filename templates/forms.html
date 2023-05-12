@@ -1,0 +1,48 @@
+{% extends 'index.html' %}
+{% block content %}
+<h1>Hello, world!</h1>
+{% if notext %}
+<div class="alert alert-danger alert-dismissible fade show" role="alert">
+    <strong>Enter the text</strong>
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+{% endif %}
+<form action="insert" method="post">
+    {% csrf_token %}
+    <div class="form-group">
+        <label for="Text">Text</label>
+        <input type="text" name="text" class="form-control">
+        <button type="submit" class="btn btn-primary" style="margin: 1rem auto 0 auto;display: block;">Submit</button>
+        {% if insertack %}
+        <p style="text-align: center;margin-top: 2%;">{{ text }} &nbsp; {{ ack }} </p>
+        {% endif %}
+    </div>
+
+</form>
+<form action="display" method="post">
+    {% csrf_token %}
+    <div class="form-group">
+        <button type="submit" class="btn btn-primary" style="margin: 1rem auto 0 auto;display: block;">Display</button>
+
+        {% if box %}
+        <div style="margin: 0 auto; height:220px; width:420px; border:1px solid #ccc; font:16px/26px Georgia, Garamond, Serif; overflow:auto; border: solid 2px black; display: block; text-align: center;">
+            {% for i in texts %}
+            {{ i }} <br>
+            {% endfor %}
+        </div>
+        {% endif %}
+            
+        
+
+    </div>
+</form>
+<form action="delete_all" method="post">
+    {% csrf_token %}
+    <div class="form-group">
+        <button type="submit" class="btn btn-primary" style="margin: 1rem auto 0 auto;display: block;">Delete
+            all</button>
+    </div>
+</form>
+{% endblock %}
